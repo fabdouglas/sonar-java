@@ -7,8 +7,8 @@ function installTravisTools {
 }
 
 function java_run_its {
-  reset_ruby
-  install_jars
+  travis_reset_ruby
+  travis_install_jars
 
   if [ "$1" == "IT-DEV" ]; then
     VERSION="DEV"
