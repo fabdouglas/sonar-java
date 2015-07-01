@@ -8,8 +8,24 @@ install: true
 script: ./travis.sh
 env:
   - TESTS=CI
-  - TESTS=IT-DEV
-  - TESTS=IT-LATEST
+  - TESTS=IT-DEV IT_TEST_CLASS=JaCoCoTest
+  - TESTS=IT-DEV IT_TEST_CLASS=JavaClasspathTest
+  - TESTS=IT-DEV IT_TEST_CLASS=JavaComplexityTest
+  - TESTS=IT-DEV IT_TEST_CLASS=JavaExtensionTest
+  - TESTS=IT-DEV IT_TEST_CLASS=JavaTest
+  - TESTS=IT-DEV IT_TEST_CLASS=SquidTest
+  - TESTS=IT-DEV IT_TEST_CLASS=Struts139Test
+  - TESTS=IT-DEV IT_TEST_CLASS=Struts139TestWithoutAccessorsTest
+  - TESTS=IT-DEV IT_TEST_CLASS=UnitTestsTest
+  - TESTS=IT-LATEST IT_TEST_CLASS=JaCoCoTest
+  - TESTS=IT-LATEST IT_TEST_CLASS=JavaClasspathTest
+  - TESTS=IT-LATEST IT_TEST_CLASS=JavaComplexityTest
+  - TESTS=IT-LATEST IT_TEST_CLASS=JavaExtensionTest
+  - TESTS=IT-LATEST IT_TEST_CLASS=JavaTest
+  - TESTS=IT-LATEST IT_TEST_CLASS=SquidTest
+  - TESTS=IT-LATEST IT_TEST_CLASS=Struts139Test
+  - TESTS=IT-LATEST IT_TEST_CLASS=Struts139TestWithoutAccessorsTest
+  - TESTS=IT-LATEST IT_TEST_CLASS=UnitTestsTest
 
 matrix:
   fast_finish: true
