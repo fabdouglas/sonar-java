@@ -11,7 +11,7 @@ function java_run_its {
   if [ "$1" == "IT-DEV" ]; then
     VERSION="DEV"
 
-    build_green "SonarSource/sonarqube" "master"
+    travis_build_green "SonarSource/sonarqube" "master"
   else
     VERSION="5.1.1"
 
