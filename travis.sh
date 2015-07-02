@@ -6,12 +6,27 @@ function installTravisTools {
   curl -sSL https://raw.githubusercontent.com/sonarsource/travis-utils/v2.1/install.sh | bash
 }
 
+function build_green {
+  echo "Fetch and build latest green snapshot of [$1:$2]"
+
+  LAST_GREEN=$(latest_green "$1")
+
+  build_sha1 "/tmp/sonarqube_$2" "$1" "$LAST_GREEN" "mvn install -DskipTests -Pdev"
+
+  unset LAST_GREEN
+}
+
+function latest_green {
+  curl -sSL http://sonarsource-979.appspot.com/$1/latestGreen
+}
+
+
 function java_run_its {
 
   if [ "$1" == "IT-DEV" ]; then
     VERSION="DEV"
 
-    travis_build_green "SonarSource/sonarqube" "master"
+    build_green "SonarSource/sonarqube" "master"
   else
     VERSION="5.1.1"
 
