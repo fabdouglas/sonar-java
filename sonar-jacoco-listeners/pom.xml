@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>sonar-jacoco-listeners</artifactId>
+
   <name>SonarQube Java :: JaCoCo Listeners</name>
 
   <dependencies>
