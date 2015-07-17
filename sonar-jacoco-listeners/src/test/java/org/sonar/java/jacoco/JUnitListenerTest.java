@@ -19,13 +19,13 @@
  */
 package org.sonar.java.jacoco;
 
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.mockito.InOrder;
-
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
 
 public class JUnitListenerTest {
 
@@ -47,8 +47,14 @@ public class JUnitListenerTest {
 
   @Before
   public void setUp() {
-    jacoco = mock(JacocoController.class);
-    listener = new JUnitListener(jacoco);
+    final JacocoController jacoco = mock(JacocoController.class);
+    this.jacoco = jacoco;
+    listener = new JUnitListener() {
+    	@Override
+    	protected JacocoController getController() {
+    	  return jacoco;
+    	}
+    };
   }
 
   @Test
@@ -74,7 +80,7 @@ public class JUnitListenerTest {
     orderedExecution.verify(jacoco).onTestFinish(testName);
   }
 
-  private void execute(Class cls) {
+  private void execute(Class<?> cls) {
     JUnitCore junit = new JUnitCore();
     junit.addListener(listener);
     junit.run(cls);

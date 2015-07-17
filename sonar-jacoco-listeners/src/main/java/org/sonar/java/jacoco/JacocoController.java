@@ -80,7 +80,13 @@ class JacocoController {
   }
 
   public static class JacocoControllerError extends Error {
-    public JacocoControllerError(String message) {
+
+	  /**
+	 * SID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public JacocoControllerError(String message) {
       super(message);
     }
 

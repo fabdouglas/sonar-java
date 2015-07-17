@@ -61,7 +61,14 @@ public class TestNGListenerTest {
   @Before
   public void setUp() {
     jacoco = mock(JacocoController.class);
-    listener = new TestNGListener(jacoco);
+    final JacocoController jacoco = mock(JacocoController.class);
+    this.jacoco = jacoco;
+    listener = new TestNGListener() {
+    	@Override
+    	protected JacocoController getController() {
+    	  return jacoco;
+    	}
+    };
   }
 
   @Test
@@ -96,7 +103,7 @@ public class TestNGListenerTest {
     orderedExecution.verify(jacoco).onTestFinish(testName);
   }
 
-  private void execute(Class cls) {
+  private void execute(Class<?> cls) {
     TestNG testNg = new TestNG(false);
     testNg.addListener(listener);
     testNg.setTestClasses(new Class[] {cls});
