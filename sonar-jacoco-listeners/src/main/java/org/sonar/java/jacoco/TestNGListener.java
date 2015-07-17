@@ -28,17 +28,13 @@ import org.testng.ITestResult;
  */
 public class TestNGListener extends JUnitListener implements ITestListener {
 
-  public TestNGListener() {
-    this(JacocoController.getInstance());
-  }
-
-  TestNGListener(JacocoController jacoco) {
-    super(jacoco);
+  protected JacocoController getController() {
+	  return JacocoController.getInstance();
   }
 
   @Override
   public void onTestStart(ITestResult result) {
-    jacoco.onTestStart(getName(result));
+	  getController().onTestStart(getName(result));
   }
 
   private static String getName(ITestResult result) {
@@ -47,22 +43,22 @@ public class TestNGListener extends JUnitListener implements ITestListener {
 
   @Override
   public void onTestSuccess(ITestResult result) {
-    jacoco.onTestFinish(getName(result));
+	  getController().onTestFinish(getName(result));
   }
 
   @Override
   public void onTestFailure(ITestResult result) {
-    jacoco.onTestFinish(getName(result));
+	  getController().onTestFinish(getName(result));
   }
 
   @Override
   public void onTestSkipped(ITestResult result) {
-    jacoco.onTestFinish(getName(result));
+	  getController().onTestFinish(getName(result));
   }
 
   @Override
   public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-    jacoco.onTestFinish(getName(result));
+	  getController().onTestFinish(getName(result));
   }
 
   @Override
