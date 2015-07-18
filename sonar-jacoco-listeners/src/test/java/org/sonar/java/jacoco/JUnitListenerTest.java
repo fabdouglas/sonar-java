@@ -52,7 +52,7 @@ public class JUnitListenerTest {
     listener = new JUnitListener() {
     	@Override
     	protected JacocoController getController() {
-    	  return jacoco;
+    	  return JUnitListenerTest.this.jacoco;
     	}
     };
   }
