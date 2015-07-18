@@ -24,49 +24,47 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 /**
- * TestNG and JUnit listener that instructs JaCoCo to create one session per
- * test.
+ * TestNG and JUnit listener that instructs JaCoCo to create one session per test.
  */
 public class TestNGListener extends JUnitListener implements ITestListener {
 
-	@Override
-	public void onTestStart(ITestResult result) {
-		jacoco.onTestStart(getName(result));
-	}
+  @Override
+  public void onTestStart(ITestResult result) {
+    jacoco.onTestStart(getName(result));
+  }
 
-	private static String getName(ITestResult result) {
-		return result.getTestClass().getName() + " "
-				+ result.getMethod().getMethodName();
-	}
+  private static String getName(ITestResult result) {
+    return result.getTestClass().getName() + " " + result.getMethod().getMethodName();
+  }
 
-	@Override
-	public void onTestSuccess(ITestResult result) {
-		jacoco.onTestFinish(getName(result));
-	}
+  @Override
+  public void onTestSuccess(ITestResult result) {
+    jacoco.onTestFinish(getName(result));
+  }
 
-	@Override
-	public void onTestFailure(ITestResult result) {
-		jacoco.onTestFinish(getName(result));
-	}
+  @Override
+  public void onTestFailure(ITestResult result) {
+    jacoco.onTestFinish(getName(result));
+  }
 
-	@Override
-	public void onTestSkipped(ITestResult result) {
-		jacoco.onTestFinish(getName(result));
-	}
+  @Override
+  public void onTestSkipped(ITestResult result) {
+    jacoco.onTestFinish(getName(result));
+  }
 
-	@Override
-	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-		jacoco.onTestFinish(getName(result));
-	}
+  @Override
+  public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+    jacoco.onTestFinish(getName(result));
+  }
 
-	@Override
-	public void onStart(ITestContext context) {
-		jacoco = getController();
-	}
+  @Override
+  public void onStart(ITestContext context) {
+    jacoco = getController();
+  }
 
-	@Override
-	public void onFinish(ITestContext context) {
-		jacoco = null;
-	}
+  @Override
+  public void onFinish(ITestContext context) {
+    jacoco = null;
+  }
 
 }

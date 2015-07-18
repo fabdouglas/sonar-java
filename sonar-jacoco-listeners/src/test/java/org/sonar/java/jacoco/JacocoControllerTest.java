@@ -80,7 +80,8 @@ public class JacocoControllerTest {
   public void should_throw_exception_when_two_tests_started_in_parallel() {
     jacoco.onTestStart("test1");
     thrown.expect(JacocoControllerError.class);
-    thrown.expectMessage("Looks like several tests executed in parallel in the same JVM, thus coverage per test can't be recorded correctly.");
+    thrown
+        .expectMessage("Looks like several tests executed in parallel in the same JVM, thus coverage per test can't be recorded correctly.");
     jacoco.onTestStart("test2");
   }
 

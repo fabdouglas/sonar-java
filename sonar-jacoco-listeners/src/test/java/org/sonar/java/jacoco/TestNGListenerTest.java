@@ -63,10 +63,10 @@ public class TestNGListenerTest {
     final JacocoController jacoco = mock(JacocoController.class);
     this.jacoco = jacoco;
     listener = new TestNGListener() {
-    	@Override
-    	protected JacocoController getController() {
-    	  return TestNGListenerTest.this.jacoco;
-    	}
+      @Override
+      protected JacocoController getController() {
+        return TestNGListenerTest.this.jacoco;
+      }
     };
   }
 
@@ -105,7 +105,7 @@ public class TestNGListenerTest {
   private void execute(Class<?> cls) {
     TestNG testNg = new TestNG(false);
     testNg.addListener(listener);
-    testNg.setTestClasses(new Class[] {cls});
+    testNg.setTestClasses(new Class[] { cls });
     testNg.run();
   }
 
