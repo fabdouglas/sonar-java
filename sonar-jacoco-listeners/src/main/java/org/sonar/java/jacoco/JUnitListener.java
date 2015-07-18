@@ -20,7 +20,6 @@
 package org.sonar.java.jacoco;
 
 import org.junit.runner.Description;
-import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 
 /**
@@ -36,21 +35,19 @@ public class JUnitListener extends RunListener {
 
 	@Override
 	public void testRunStarted(Description description) throws Exception {
+	    System.out.println("testRunStarted:"+getName(description));
 		jacoco = getController();
 	}
 
 	@Override
-	public void testRunFinished(Result result) throws Exception {
-		jacoco = null;
-	}
-
-	@Override
 	public void testStarted(Description description) {
+	    System.out.println("testStarted:"+getName(description));
 		jacoco.onTestStart(getName(description));
 	}
 
 	@Override
 	public void testFinished(Description description) {
+	    System.out.println("testFinished:"+getName(description));
 		jacoco.onTestFinish(getName(description));
 	}
 

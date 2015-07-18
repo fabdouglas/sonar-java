@@ -44,9 +44,7 @@ class JacocoController {
   private JacocoController() {
     try {
       this.agent = RT.getAgent();
-    } catch (NoClassDefFoundError e) {
-      throw new JacocoControllerError(ERROR, e);
-    } catch (Exception e) {
+    } catch (NoClassDefFoundError | Exception e) {
       throw new JacocoControllerError(ERROR, e);
     }
   }
@@ -59,19 +57,17 @@ class JacocoController {
     if (testStarted) {
       throw new JacocoControllerError("Looks like several tests executed in parallel in the same JVM, thus coverage per test can't be recorded correctly.");
     }
-    // Dump coverage between tests
-    dump("");
+    agent.setSessionId(name);
     testStarted = true;
   }
 
   public synchronized void onTestFinish(String name) {
     // Dump coverage for test
-    dump(name);
+    dump();
     testStarted = false;
   }
 
-  private void dump(String sessionId) {
-    agent.setSessionId(sessionId);
+  private void dump() {
     try {
       agent.dump(true);
     } catch (IOException e) {

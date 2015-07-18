@@ -54,8 +54,7 @@ public class JacocoControllerTest {
   public void test_onStart() throws Exception {
     jacoco.onTestStart("test");
     InOrder inOrder = Mockito.inOrder(agent);
-    inOrder.verify(agent).setSessionId("");
-    inOrder.verify(agent).dump(true);
+    inOrder.verify(agent).setSessionId("test");
     verifyNoMoreInteractions(agent);
   }
 
@@ -64,7 +63,6 @@ public class JacocoControllerTest {
     when(agent.getExecutionData(false)).thenReturn(new byte[] {});
     jacoco.onTestFinish("test");
     InOrder inOrder = Mockito.inOrder(agent);
-    inOrder.verify(agent).setSessionId("test");
     inOrder.verify(agent).dump(true);
     verifyNoMoreInteractions(agent);
   }
