@@ -5,11 +5,10 @@
   <parent>
     <groupId>org.sonarsource.java</groupId>
     <artifactId>java</artifactId>
-    <version>3.4</version>
+    <version>3.5-SNAPSHOT</version>
   </parent>
 
   <artifactId>sonar-jacoco-listeners</artifactId>
-  <version>3.4.0-FDA</version>
 
   <name>SonarQube Java :: JaCoCo Listeners</name>
 
