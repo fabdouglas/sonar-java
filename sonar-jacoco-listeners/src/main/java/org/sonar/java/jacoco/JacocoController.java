@@ -26,76 +26,82 @@ import java.io.IOException;
 
 class JacocoController {
 
-  private static final String ERROR = "Unable to access JaCoCo Agent - make sure that you use JaCoCo and version not lower than 0.6.2.";
+	private static final String ERROR = "Unable to access JaCoCo Agent - make sure that you use JaCoCo and version not lower than 0.6.2.";
 
-  private final IAgent agent;
+	private final IAgent agent;
 
-  private boolean testStarted;
+	private boolean testStarted;
 
-  private static JacocoController singleton;
+	private static JacocoController singleton;
 
-  public static synchronized JacocoController getInstance() {
-    if (singleton == null) {
-      singleton = new JacocoController();
-    }
-    return singleton;
-  }
+	public static synchronized JacocoController getInstance() {
+		if (singleton == null) {
+			singleton = new JacocoController();
+		}
+		return singleton;
+	}
 
-  private JacocoController() {
-    try {
-      this.agent = RT.getAgent();
-    } catch (NoClassDefFoundError | Exception e) {
-      throw new JacocoControllerError(ERROR, e);
-    }
-  }
+	private JacocoController() {
+		try {
+			this.agent = RT.getAgent();
+		} catch (NoClassDefFoundError | Exception e) {
+			throw new JacocoControllerError(ERROR, e);
+		}
+	}
 
-  JacocoController(IAgent agent) {
-    this.agent = agent;
-  }
+	JacocoController(IAgent agent) {
+		this.agent = agent;
+	}
 
-  public synchronized void onTestStart(String name) {
-    if (testStarted) {
-      throw new JacocoControllerError("Looks like several tests executed in parallel in the same JVM, thus coverage per test can't be recorded correctly.");
-    }
-    agent.setSessionId("");
-    dump();
-    agent.setSessionId(name);
-    testStarted = true;
-  }
+	public synchronized void onTestStart(String name) {
+		if (testStarted) {
+			throw new JacocoControllerError(
+					"Looks like several tests executed in parallel in the same JVM, thus coverage per test can't be recorded correctly.");
+		}
+		System.out.println("AAsetSessionId:" + agent.getSessionId() + " -> "
+				+ name);
+		dump();
+		System.out.println("ABsetSessionId:" + agent.getSessionId() + " -> "
+				+ name);
+		agent.setSessionId(name);
+		testStarted = true;
+	}
 
-  public synchronized void onTestFinish(String name) {
-    // Dump coverage for test
-    dump();
-    agent.setSessionId("");
-    testStarted = false;
-  }
+	public synchronized void onTestFinish(String name) {
+		// Dump coverage for test
+		System.out.println("BAsetSessionId:" + agent.getSessionId() + " -> ''");
+		dump();
+		System.out.println("BBsetSessionId:" + agent.getSessionId() + " -> ''");
+		agent.setSessionId("");
+		testStarted = false;
+	}
 
-  private void dump() {
-    try {
-      agent.dump(true);
-    } catch (IOException e) {
-      throw new JacocoControllerError(e);
-    }
-  }
+	private void dump() {
+		try {
+			agent.dump(true);
+		} catch (IOException e) {
+			throw new JacocoControllerError(e);
+		}
+	}
 
-  public static class JacocoControllerError extends Error {
+	public static class JacocoControllerError extends Error {
 
-	  /**
-	 * SID
-	 */
-	private static final long serialVersionUID = 1L;
+		/**
+		 * SID
+		 */
+		private static final long serialVersionUID = 1L;
 
-	public JacocoControllerError(String message) {
-      super(message);
-    }
+		public JacocoControllerError(String message) {
+			super(message);
+		}
 
-    public JacocoControllerError(String message, Throwable cause) {
-      super(message, cause);
-    }
+		public JacocoControllerError(String message, Throwable cause) {
+			super(message, cause);
+		}
 
-    public JacocoControllerError(Throwable cause) {
-      super(cause);
-    }
-  }
+		public JacocoControllerError(Throwable cause) {
+			super(cause);
+		}
+	}
 
 }
