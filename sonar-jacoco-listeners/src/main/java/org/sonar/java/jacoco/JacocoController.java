@@ -58,20 +58,14 @@ class JacocoController {
 			throw new JacocoControllerError(
 					"Looks like several tests executed in parallel in the same JVM, thus coverage per test can't be recorded correctly.");
 		}
-		System.out.println("AAsetSessionId:" + agent.getSessionId() + " -> "
-				+ name);
 		dump();
-		System.out.println("ABsetSessionId:" + agent.getSessionId() + " -> "
-				+ name);
 		agent.setSessionId(name);
 		testStarted = true;
 	}
 
 	public synchronized void onTestFinish(String name) {
 		// Dump coverage for test
-		System.out.println("BAsetSessionId:" + agent.getSessionId() + " -> ''");
 		dump();
-		System.out.println("BBsetSessionId:" + agent.getSessionId() + " -> ''");
 		agent.setSessionId("");
 		testStarted = false;
 	}

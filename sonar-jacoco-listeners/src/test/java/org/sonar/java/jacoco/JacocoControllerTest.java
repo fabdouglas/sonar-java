@@ -54,7 +54,6 @@ public class JacocoControllerTest {
   public void test_onStart() throws Exception {
     jacoco.onTestStart("test");
     InOrder inOrder = Mockito.inOrder(agent);
-    inOrder.verify(agent).setSessionId("");
     inOrder.verify(agent).dump(true);
     inOrder.verify(agent).setSessionId("test");
     verifyNoMoreInteractions(agent);
