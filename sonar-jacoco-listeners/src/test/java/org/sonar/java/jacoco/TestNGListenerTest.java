@@ -60,13 +60,12 @@ public class TestNGListenerTest {
 
   @Before
   public void setUp() {
-    jacoco = mock(JacocoController.class);
     final JacocoController jacoco = mock(JacocoController.class);
     this.jacoco = jacoco;
     listener = new TestNGListener() {
     	@Override
     	protected JacocoController getController() {
-    	  return jacoco;
+    	  return TestNGListenerTest.this.jacoco;
     	}
     };
   }
@@ -114,12 +113,14 @@ public class TestNGListenerTest {
 
   @Test
   public void testStarted() {
+    listener.onStart(null);
     listener.testStarted(mockDescription());
     verify(jacoco).onTestStart("class method");
   }
 
   @Test
   public void testFinished() {
+    listener.onStart(null);
     listener.testFinished(mockDescription());
     verify(jacoco).onTestFinish("class method");
   }
@@ -128,30 +129,35 @@ public class TestNGListenerTest {
 
   @Test
   public void onTestStart() {
+    listener.onStart(null);
     listener.onTestStart(mockTestResult());
     verify(jacoco).onTestStart("class method");
   }
 
   @Test
   public void onTestSuccess() {
+    listener.onStart(null);
     listener.onTestSuccess(mockTestResult());
     verify(jacoco).onTestFinish("class method");
   }
 
   @Test
   public void onTestFailure() {
+    listener.onStart(null);
     listener.onTestFailure(mockTestResult());
     verify(jacoco).onTestFinish("class method");
   }
 
   @Test
   public void onTestSkipped() {
+    listener.onStart(null);
     listener.onTestSkipped(mockTestResult());
     verify(jacoco).onTestFinish("class method");
   }
 
   @Test
   public void onTestFailedButWithinSuccessPercentage() {
+    listener.onStart(null);
     listener.onTestFailedButWithinSuccessPercentage(mockTestResult());
     verify(jacoco).onTestFinish("class method");
   }
